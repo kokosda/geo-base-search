@@ -5,20 +5,20 @@ namespace GeoBaseSearch.Infrastructure.DataAccess;
 
 public sealed class GeoBaseFileLoader : IGeoBaseLoader
 {
-    private readonly IGeoBaseImageParser _geoBaseImageParser;
+	private readonly IGeoBaseImageParser _geoBaseImageParser;
 
-    public GeoBaseFileLoader(IGeoBaseImageParser geoBaseImageParser)
-    {
-        _geoBaseImageParser = geoBaseImageParser ?? throw new ArgumentNullException(nameof(geoBaseImageParser));
-    }
+	public GeoBaseFileLoader(IGeoBaseImageParser geoBaseImageParser)
+	{
+		_geoBaseImageParser = geoBaseImageParser ?? throw new ArgumentNullException(nameof(geoBaseImageParser));
+	}
 
-    public GeoBaseModel Load(string geoBaseFilePath)
-    {
-        if (string.IsNullOrWhiteSpace(geoBaseFilePath))
-            throw new ArgumentNullException(nameof(geoBaseFilePath));
+	public GeoBaseModel Load(string geoBaseFilePath)
+	{
+		if (string.IsNullOrWhiteSpace(geoBaseFilePath))
+			throw new ArgumentNullException(nameof(geoBaseFilePath));
 
-        var geoBaseImage = File.ReadAllBytes(geoBaseFilePath);
-        var result = _geoBaseImageParser.Parse(geoBaseImage);
-        return result;
-    }
+		var geoBaseImage = File.ReadAllBytes(geoBaseFilePath);
+		var result = _geoBaseImageParser.Parse(geoBaseImage);
+		return result;
+	}
 }

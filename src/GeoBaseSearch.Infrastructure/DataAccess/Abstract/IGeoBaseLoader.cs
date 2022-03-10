@@ -4,5 +4,5 @@ namespace GeoBaseSearch.Infrastructure.DataAccess.Abstract;
 
 public interface IGeoBaseLoader
 {
-    GeoBaseModel Load(string geoBaseFilePath);
+	GeoBaseModel Load(string geoBaseFilePath);
 }
