@@ -27,7 +27,7 @@ Develop a web application to get the coordinates of a user by their IP address a
     
     60 bytes - header
     
-		intversion ; // database version 
+		int version ; // database version 
 		sbyte name[ 32 ]; // name/prefix for the database 
 		ulong timestamp; // database creation time 
 		int records; // total number of entries 
