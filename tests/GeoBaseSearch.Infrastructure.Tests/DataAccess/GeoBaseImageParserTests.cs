@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using GeoBaseSearch.Infrastructure.DataAccess;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace GeoBaseSearch.Infrastructure.Tests.DataAccess;
 
@@ -25,6 +24,21 @@ public sealed class GeoBaseImageParserTests
 		Assert.AreEqual(1, result.HeaderModel.Version);
 		Assert.AreEqual(1487167858, result.HeaderModel.Timestamp);
 		Assert.AreEqual(100000, result.HeaderModel.Records);
+		Assert.AreEqual(60, result.HeaderModel.OffsetRanges);
+		Assert.AreEqual(10800060, result.HeaderModel.OffsetCities);
 		Assert.AreEqual(1200060, result.HeaderModel.OffsetLocations);
+		Assert.IsNotNull(result.IpAddressIntervals);
+		Assert.AreEqual(100000, result.IpAddressIntervals.Length);
+
+		foreach (var ipAddressInterval in result.IpAddressIntervals)
+		{
+			Assert.IsNotNull(ipAddressInterval);
+			Assert.IsNotNull(ipAddressInterval.Location);
+			Assert.That(ipAddressInterval.Location?.Country.StartsWith("cou_"), Is.True);
+			Assert.That(ipAddressInterval.Location?.Region.StartsWith("reg_"), Is.True);
+			Assert.That(ipAddressInterval.Location?.Postal.StartsWith("pos_"), Is.True);
+			Assert.That(ipAddressInterval.Location?.City.StartsWith("cit_"), Is.True);
+			Assert.That(ipAddressInterval.Location?.Organization.StartsWith("org_"), Is.True);
+		}
 	}
 }
