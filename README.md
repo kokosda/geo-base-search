@@ -28,7 +28,7 @@ Develop a web application to get the coordinates of a user by their IP address a
     60 bytes - header
     
 		int version ; // database version 
-		sbyte name[ 32 ]; // name/prefix for the database 
+		sbyte name[32]; // name/prefix for the database 
 		ulong timestamp; // database creation time 
 		int records; // total number of entries 
 		uint offset_ranges; // offset from the beginning of the file to the beginning of the list of records with geoinformation 
@@ -43,11 +43,11 @@ Develop a web application to get the coordinates of a user by their IP address a
     
     96 bytes * Header.records (number of records) - a list of records with location information with coordinates (longitude and latitude)
     
-	    sbyte country[ 8 ]; // country name (random string with "cou_" prefix) 
-	    sbyte region[ 12 ]; // region name (random string with "reg_" prefix) 
-	    sbyte postal[ 12 ]; // postal code (random string with "pos_" prefix) 
-	    sbyte city[ 24 ]; // city name (random string with "cit_" prefix) 
-	    sbyte organization[ 32 ]; // organization name (random string with "org_" prefix) 
+	    sbyte country[8]; // country name (random string with "cou_" prefix) 
+	    sbyte region[12]; // region name (random string with "reg_" prefix) 
+	    sbyte postal[12]; // postal code (random string with "pos_" prefix) 
+	    sbyte city[24]; // city name (random string with "cit_" prefix) 
+	    sbyte organization[32]; // organization name (random string with "org_" prefix) 
 	    float latitude; // latitude 
 	    float longitude; // longitude
     
