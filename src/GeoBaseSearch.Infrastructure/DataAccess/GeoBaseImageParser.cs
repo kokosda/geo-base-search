@@ -27,7 +27,7 @@ public sealed class GeoBaseImageParser : IGeoBaseImageParser
 		var version = BitConverter.ToInt32(new ReadOnlySpan<byte>(geoBaseImage, shift, SIZE_OF_INT32));
 
 		shift += SIZE_OF_INT32;
-		var name = new ReadOnlySpan<byte>(geoBaseImage, shift, 32).ToArray().Select(i => (sbyte) i).ToArray();
+		var name = new ReadOnlySpan<byte>(geoBaseImage, shift, 32).ToArray().Select(i => (sbyte)i).ToArray();
 
 		shift += 32;
 		var timestamp = BitConverter.ToUInt64(new ReadOnlySpan<byte>(geoBaseImage, shift, SIZE_OF_UINT64));
@@ -39,6 +39,10 @@ public sealed class GeoBaseImageParser : IGeoBaseImageParser
 		var offsetRanges = BitConverter.ToUInt32(new ReadOnlySpan<byte>(geoBaseImage, shift, SIZE_OF_UINT32));
 
 		shift += SIZE_OF_UINT32;
+		var offsetCities = BitConverter.ToUInt32(new ReadOnlySpan<byte>(geoBaseImage, shift, SIZE_OF_UINT32));
+
+		shift += SIZE_OF_UINT32;
+		var offsetLocations = BitConverter.ToUInt32(new ReadOnlySpan<byte>(geoBaseImage, shift, SIZE_OF_UINT32));
 
 		var result = new HeaderModel
 		{
@@ -46,7 +50,9 @@ public sealed class GeoBaseImageParser : IGeoBaseImageParser
 			Name = name,
 			Timestamp = timestamp,
 			Records = records,
-			OffsetRanges = offsetRanges
+			OffsetRanges = offsetRanges,
+			OffsetCities = offsetCities,
+			OffsetLocations = offsetLocations
 		};
 
 		return result;
