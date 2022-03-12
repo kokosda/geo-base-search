@@ -10,6 +10,7 @@ public sealed class GeoBaseImageParser : IGeoBaseImageParser
 	private const int SIZE_OF_UINT32 = 4;
 	private const int SIZE_OF_UINT64 = 8;
 	private const int SIZE_OF_FLOAT = 4;
+	private const int SIZE_OF_LOCATION_MODEL = 96;
 
 	public GeoBaseModel Parse(byte[] geoBaseImage)
 	{
@@ -96,7 +97,7 @@ public sealed class GeoBaseImageParser : IGeoBaseImageParser
 
 	private static LocationModel GetLocation(byte[] geoBaseImage, uint locationIndex, HeaderModel headerModel)
 	{
-		var shift = (int)locationIndex * 96 + (int)headerModel.OffsetLocations;
+		var shift = (int)locationIndex * SIZE_OF_LOCATION_MODEL + (int)headerModel.OffsetLocations;
 
 		var country = Encoding.UTF8.GetString(new ReadOnlySpan<byte>(geoBaseImage, shift, 8));
 		shift += 8;
@@ -142,7 +143,7 @@ public sealed class GeoBaseImageParser : IGeoBaseImageParser
 			var index = BitConverter.ToInt32(new ReadOnlySpan<byte>(geoBaseImage, shift, SIZE_OF_INT32));
 			shift += SIZE_OF_INT32;
 
-			var recordsRelativeIndex = index / 96;
+			var recordsRelativeIndex = index / SIZE_OF_LOCATION_MODEL;
 			result[i] = ipAddressIntervalModels[recordsRelativeIndex];
 		}
 
