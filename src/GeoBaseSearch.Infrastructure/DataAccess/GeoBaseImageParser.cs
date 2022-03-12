@@ -17,11 +17,13 @@ public sealed class GeoBaseImageParser : IGeoBaseImageParser
 			throw new ArgumentNullException(nameof(geoBaseImage));
 
 		var headerModel = GetHeader(geoBaseImage);
+		var ipAddressIntervals = GetIpAddressIntervals(geoBaseImage, headerModel);
 
 		var result = new GeoBaseModel
 		{
 			HeaderModel = headerModel,
-			IpAddressIntervals = GetIpAddressIntervals(geoBaseImage, headerModel)
+			IpAddressIntervals = ipAddressIntervals,
+			IpAddressIntervalsSortedByCityName = GetIpAddressIntervalSortedByCityName(geoBaseImage, headerModel, ipAddressIntervals)
 		};
 
 		return result;
@@ -126,6 +128,23 @@ public sealed class GeoBaseImageParser : IGeoBaseImageParser
 			Latitude = latitude,
 			Longitude = longitude
 		};
+
+		return result;
+	}
+
+	private static IpAddressIntervalModel[] GetIpAddressIntervalSortedByCityName(byte[] geoBaseImage, HeaderModel headerModel, IpAddressIntervalModel[] ipAddressIntervalModels)
+	{
+		var result = new IpAddressIntervalModel[headerModel.Records];
+		var shift = (int)headerModel.OffsetCities;
+
+		for (var i = 0; i < result.Length; i++)
+		{
+			var index = BitConverter.ToInt32(new ReadOnlySpan<byte>(geoBaseImage, shift, SIZE_OF_INT32));
+			shift += SIZE_OF_INT32;
+
+			var recordsRelativeIndex = index / 96;
+			result[recordsRelativeIndex] = ipAddressIntervalModels[i];
+		}
 
 		return result;
 	}

@@ -40,5 +40,10 @@ public sealed class GeoBaseImageParserTests
 			Assert.That(ipAddressInterval.Location?.City.StartsWith("cit_"), Is.True);
 			Assert.That(ipAddressInterval.Location?.Organization.StartsWith("org_"), Is.True);
 		}
+
+		foreach (var ipAddressInterval in result.IpAddressIntervalsSortedByCityName)
+		{
+			Assert.IsNotNull(ipAddressInterval);
+		}
 	}
 }
