@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Linq;
 using GeoBaseSearch.Infrastructure.DataAccess;
 using NUnit.Framework;
 
@@ -41,9 +43,18 @@ public sealed class GeoBaseImageParserTests
 			Assert.That(ipAddressInterval.Location?.Organization.StartsWith("org_"), Is.True);
 		}
 
-		foreach (var ipAddressInterval in result.IpAddressIntervalsSortedByCityName)
+		Assert.IsNotNull(result.IpAddressIntervalsSortedByCityName);
+		Assert.AreEqual(result.IpAddressIntervals.Length, result.IpAddressIntervalsSortedByCityName.Length);
+
+		var prevIpAddressInterval = result.IpAddressIntervalsSortedByCityName[0];
+		Assert.IsNotNull(prevIpAddressInterval);
+
+		foreach (var ipAddressInterval in result.IpAddressIntervalsSortedByCityName.Skip(1))
 		{
 			Assert.IsNotNull(ipAddressInterval);
+			Assert.That(string.Compare(ipAddressInterval.Location?.City, prevIpAddressInterval.Location?.City, StringComparison.InvariantCulture), Is.GreaterThanOrEqualTo(0));
+
+			prevIpAddressInterval = ipAddressInterval;
 		}
 	}
 }

@@ -143,7 +143,7 @@ public sealed class GeoBaseImageParser : IGeoBaseImageParser
 			shift += SIZE_OF_INT32;
 
 			var recordsRelativeIndex = index / 96;
-			result[recordsRelativeIndex] = ipAddressIntervalModels[i];
+			result[i] = ipAddressIntervalModels[recordsRelativeIndex];
 		}
 
 		return result;
