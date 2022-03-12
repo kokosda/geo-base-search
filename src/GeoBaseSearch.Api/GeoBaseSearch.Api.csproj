@@ -10,4 +10,15 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\GeoBaseSearch.Application\GeoBaseSearch.Application.csproj" />
+      <ProjectReference Include="..\GeoBaseSearch.Infrastructure\GeoBaseSearch.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Resources\geobase.dat">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
