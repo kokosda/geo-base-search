@@ -21,12 +21,12 @@ public sealed class GeoBaseImageParserTests
 		// Assert
 		Assert.IsNotNull(result);
 		Assert.IsNotNull(result.HeaderModel);
-		Assert.AreEqual(1, result.HeaderModel.Version);
-		Assert.AreEqual(1487167858, result.HeaderModel.Timestamp);
-		Assert.AreEqual(100000, result.HeaderModel.Records);
-		Assert.AreEqual(60, result.HeaderModel.OffsetRanges);
-		Assert.AreEqual(10800060, result.HeaderModel.OffsetCities);
-		Assert.AreEqual(1200060, result.HeaderModel.OffsetLocations);
+		Assert.AreEqual(1, result.HeaderModel?.Version);
+		Assert.AreEqual(1487167858, result.HeaderModel?.Timestamp);
+		Assert.AreEqual(100000, result.HeaderModel?.Records);
+		Assert.AreEqual(60, result.HeaderModel?.OffsetRanges);
+		Assert.AreEqual(10800060, result.HeaderModel?.OffsetCities);
+		Assert.AreEqual(1200060, result.HeaderModel?.OffsetLocations);
 		Assert.IsNotNull(result.IpAddressIntervals);
 		Assert.AreEqual(100000, result.IpAddressIntervals.Length);
 
