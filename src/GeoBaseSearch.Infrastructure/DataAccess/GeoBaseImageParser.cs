@@ -86,6 +86,7 @@ public sealed class GeoBaseImageParser : IGeoBaseImageParser
 
 			result[i] = new IpAddressIntervalModel
 			{
+				Id = i + 1,
 				IpFrom = ipFrom,
 				IpTo = ipTo,
 				Location = GetLocation(geoBaseImage, locationIndex, headerModel)
@@ -121,6 +122,7 @@ public sealed class GeoBaseImageParser : IGeoBaseImageParser
 
 		var result = new LocationModel
 		{
+			Id = (int)locationIndex - (int)headerModel.OffsetLocations + 1,
 			Country = country,
 			Region = region,
 			Postal = postal,
