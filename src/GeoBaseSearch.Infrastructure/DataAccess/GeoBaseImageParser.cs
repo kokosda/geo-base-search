@@ -23,7 +23,7 @@ public sealed class GeoBaseImageParser : IGeoBaseImageParser
 		var result = new GeoBaseModel
 		{
 			HeaderModel = headerModel,
-			IpAddressIntervals = ipAddressIntervals,
+			IpAddressIntervalsSortedByIpRanges = ipAddressIntervals,
 			IpAddressIntervalsSortedByCityName = GetIpAddressIntervalSortedByCityName(geoBaseImage, headerModel, ipAddressIntervals)
 		};
 

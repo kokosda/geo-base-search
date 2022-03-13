@@ -29,10 +29,10 @@ public sealed class GeoBaseImageParserTests
 		Assert.AreEqual(60, result.HeaderModel?.OffsetRanges);
 		Assert.AreEqual(10800060, result.HeaderModel?.OffsetCities);
 		Assert.AreEqual(1200060, result.HeaderModel?.OffsetLocations);
-		Assert.IsNotNull(result.IpAddressIntervals);
-		Assert.AreEqual(100000, result.IpAddressIntervals.Length);
+		Assert.IsNotNull(result.IpAddressIntervalsSortedByIpRanges);
+		Assert.AreEqual(100000, result.IpAddressIntervalsSortedByIpRanges.Length);
 
-		foreach (var ipAddressInterval in result.IpAddressIntervals)
+		foreach (var ipAddressInterval in result.IpAddressIntervalsSortedByIpRanges)
 		{
 			Assert.IsNotNull(ipAddressInterval);
 			Assert.IsNotNull(ipAddressInterval.Location);
@@ -44,7 +44,7 @@ public sealed class GeoBaseImageParserTests
 		}
 
 		Assert.IsNotNull(result.IpAddressIntervalsSortedByCityName);
-		Assert.AreEqual(result.IpAddressIntervals.Length, result.IpAddressIntervalsSortedByCityName.Length);
+		Assert.AreEqual(result.IpAddressIntervalsSortedByIpRanges.Length, result.IpAddressIntervalsSortedByCityName.Length);
 
 		var prevIpAddressInterval = result.IpAddressIntervalsSortedByCityName[0];
 		Assert.IsNotNull(prevIpAddressInterval);
