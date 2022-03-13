@@ -12,6 +12,8 @@
 
     <ItemGroup>
       <ProjectReference Include="..\GeoBaseSearch.Core\GeoBaseSearch.Core.csproj" />
+      <ProjectReference Include="..\GeoBaseSearch.Domain\GeoBaseSearch.Domain.csproj" />
+      <ProjectReference Include="..\GeoBaseSearch.Infrastructure\GeoBaseSearch.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
