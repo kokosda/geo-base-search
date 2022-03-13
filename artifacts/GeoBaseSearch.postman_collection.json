@@ -1,0 +1,33 @@
+{
+	"info": {
+		"_postman_id": "9f857d34-8496-4a38-87ec-a758d1eb2e72",
+		"name": "GeoBaseSearch",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "LocationByIp",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/ip/location?ip=123.234.123.234",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"ip",
+						"location"
+					],
+					"query": [
+						{
+							"key": "ip",
+							"value": "123.234.123.234"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
