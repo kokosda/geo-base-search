@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Text.Json.Serialization;
 using GeoBaseSearch.Domain.Locations;
 
 namespace GeoBaseSearch.Application.IpAddresses;
@@ -12,6 +13,8 @@ public sealed class LocationByIpDto
 	public string Organization { get; init; } = string.Empty;
 	public float Longitude { get; init; }
 	public float Latitude { get; init; }
+
+	[JsonIgnore]
 	public HttpStatusCode HttpStatusCode { get; init; }
 
 	public static LocationByIpDto FromLocation(Location location, HttpStatusCode httpStatusCode)
