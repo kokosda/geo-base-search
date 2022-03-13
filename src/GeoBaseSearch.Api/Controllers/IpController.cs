@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GeoBaseSearch.Api.Controllers;
 
-[Route("ip")]
+[Route("api/v1/ip")]
 [ApiController]
 public sealed class IpController : ControllerBase
 {
@@ -17,7 +17,8 @@ public sealed class IpController : ControllerBase
 	}
 
 	[HttpGet]
-	public async Task<ActionResult> Location([FromQuery] LocationByIpQuery query)
+	[Route("location")]
+	public async Task<ActionResult> GetLocation([FromQuery] LocationByIpQuery query)
 	{
 		var responseContainer = await _locationByIpQueryHandler.HandleAsync(query);
 

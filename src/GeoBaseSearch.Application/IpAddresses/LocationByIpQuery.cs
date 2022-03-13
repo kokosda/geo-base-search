@@ -2,5 +2,5 @@
 
 public sealed class LocationByIpQuery
 {
-	public string IpAddress { get; init; } = string.Empty;
+	public string Ip { get; init; } = string.Empty;
 }
