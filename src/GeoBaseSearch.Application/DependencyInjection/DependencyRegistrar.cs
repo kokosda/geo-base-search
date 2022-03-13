@@ -1,5 +1,5 @@
 ﻿using GeoBaseSearch.Application.Cities;
-using GeoBaseSearch.Application.Locations;
+using GeoBaseSearch.Application.IpAddresses;
 using GeoBaseSearch.Core.Handlers;
 using Microsoft.Extensions.DependencyInjection;
 
