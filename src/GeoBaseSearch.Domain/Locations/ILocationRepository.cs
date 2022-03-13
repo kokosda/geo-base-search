@@ -2,5 +2,5 @@
 
 public interface ILocationRepository
 {
-	Task<Location?> GetLocationByIpAddress(int ipAddress);
+	Task<Location?> GetLocationByIpAddress(uint ipAddress);
 }

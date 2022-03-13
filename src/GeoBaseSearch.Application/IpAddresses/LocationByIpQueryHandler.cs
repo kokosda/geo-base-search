@@ -22,7 +22,7 @@ public sealed class LocationByIpQueryHandler : GenericQueryHandlerBase<LocationB
 	{
 		var result = new ResponseContainerWithValue<LocationByIpDto>();
 
-		var ipAddressResponseContainer = _ipAddressConverter.ConvertStringToInt32IpAddress(query.IpAddress);
+		var ipAddressResponseContainer = _ipAddressConverter.ConvertStringToUInt32IpAddress(query.Ip);
 
 		if (!ipAddressResponseContainer.IsSuccess)
 		{
@@ -30,12 +30,12 @@ public sealed class LocationByIpQueryHandler : GenericQueryHandlerBase<LocationB
 			return result;
 		}
 
-		var ipAddressInt32 = ipAddressResponseContainer.Value;
-		var location = await _locationRepository.GetLocationByIpAddress(ipAddressInt32);
+		var ipAddressUInt32 = ipAddressResponseContainer.Value;
+		var location = await _locationRepository.GetLocationByIpAddress(ipAddressUInt32);
 
 		if (location == null)
 		{
-			result.SetErrorValue(new LocationByIpDto { HttpStatusCode = HttpStatusCode.NotFound }, $"Provided value {query.IpAddress} can not be parsed to IP address.");
+			result.SetErrorValue(new LocationByIpDto { HttpStatusCode = HttpStatusCode.NotFound }, $"Provided value {query.Ip} can not be found among registered records.");
 			return result;
 		}
 

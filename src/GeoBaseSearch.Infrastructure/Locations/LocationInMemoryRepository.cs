@@ -13,7 +13,7 @@ public sealed class LocationInMemoryRepository : ILocationRepository
 		_inMemoryDatabase = inMemoryDatabase ?? throw new ArgumentNullException(nameof(inMemoryDatabase));
 	}
 
-	public Task<Location?> GetLocationByIpAddress(int ipAddress)
+	public Task<Location?> GetLocationByIpAddress(uint ipAddress)
 	{
 		var ipAddressIntervals = _inMemoryDatabase.GeoBase?.IpAddressIntervals;
 
@@ -32,7 +32,7 @@ public sealed class LocationInMemoryRepository : ILocationRepository
 		return Task.FromResult(result);
 	}
 
-	private static IpAddressIntervalModel? FindIpAddressIntervalByIpAddress(IpAddressIntervalModel[] ipAddressIntervals, int ipAddress)
+	private static IpAddressIntervalModel? FindIpAddressIntervalByIpAddress(IpAddressIntervalModel[] ipAddressIntervals, uint ipAddress)
 	{
 		if (ipAddressIntervals.Length == 0)
 			return null;

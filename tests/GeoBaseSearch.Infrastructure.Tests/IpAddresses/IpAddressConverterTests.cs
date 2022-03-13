@@ -13,7 +13,7 @@ public sealed class IpAddressConverterTests
 	public void ConvertStringToInt32IpAddress_WhenIpAddressStringIsWellFormed_ReturnsIpAddressInt32Representation(string ipAddressString, int expectedIpAddress)
 	{
 		// Act
-		var result = _ipAddressConverter.ConvertStringToInt32IpAddress(ipAddressString);
+		var result = _ipAddressConverter.ConvertStringToUInt32IpAddress(ipAddressString);
 
 		// Assert
 		Assert.IsNotNull(result);
@@ -25,7 +25,7 @@ public sealed class IpAddressConverterTests
 	public void ConvertStringToInt32IpAddress_WhenIpAddressStringIsIpV6_ReturnsErrorMessage(string ipAddressString)
 	{
 		// Act
-		var result = _ipAddressConverter.ConvertStringToInt32IpAddress(ipAddressString);
+		var result = _ipAddressConverter.ConvertStringToUInt32IpAddress(ipAddressString);
 
 		// Assert
 		Assert.IsNotNull(result);
@@ -37,7 +37,7 @@ public sealed class IpAddressConverterTests
 	public void ConvertStringToInt32IpAddress_WhenIpAddressStringIsMalformed_ReturnsErrorMessage(string ipAddressString)
 	{
 		// Act
-		var result = _ipAddressConverter.ConvertStringToInt32IpAddress(ipAddressString);
+		var result = _ipAddressConverter.ConvertStringToUInt32IpAddress(ipAddressString);
 
 		// Assert
 		Assert.IsNotNull(result);

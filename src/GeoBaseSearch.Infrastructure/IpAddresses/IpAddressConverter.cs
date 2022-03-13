@@ -9,9 +9,9 @@ public sealed class IpAddressConverter : IIpAddressConverter
 {
 	private const int IPV4_SECTIONS_COUNT = 4;
 
-	public IResponseContainerWithValue<int> ConvertStringToInt32IpAddress(string ipAddressString)
+	public IResponseContainerWithValue<uint> ConvertStringToUInt32IpAddress(string ipAddressString)
 	{
-		var result = new ResponseContainerWithValue<int>();
+		var result = new ResponseContainerWithValue<uint>();
 
 		if (!IPAddress.TryParse(ipAddressString, out var ipAddress))
 		{
@@ -27,8 +27,8 @@ public sealed class IpAddressConverter : IIpAddressConverter
 			return result;
 		}
 
-		var ipAddressInt32 = BitConverter.ToInt32(new ReadOnlySpan<byte>(ipAddressBytes));
-		result.SetSuccessValue(ipAddressInt32);
+		var ipAddressUInt32 = BitConverter.ToUInt32(new ReadOnlySpan<byte>(ipAddressBytes));
+		result.SetSuccessValue(ipAddressUInt32);
 		return result;
 	}
 }

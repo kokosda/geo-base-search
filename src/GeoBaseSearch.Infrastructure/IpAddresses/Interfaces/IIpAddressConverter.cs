@@ -4,5 +4,5 @@ namespace GeoBaseSearch.Infrastructure.IpAddresses.Interfaces;
 
 public interface IIpAddressConverter
 {
-	IResponseContainerWithValue<int> ConvertStringToInt32IpAddress(string ipAddressString);
+	IResponseContainerWithValue<uint> ConvertStringToUInt32IpAddress(string ipAddressString);
 }
