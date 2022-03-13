@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using GeoBaseSearch.Domain.Locations;
 using GeoBaseSearch.Infrastructure.DataAccess.Abstract;
 using GeoBaseSearch.Infrastructure.Locations;
 using GeoBaseSearch.Infrastructure.Models;
@@ -30,7 +32,7 @@ public sealed class LocationInMemoryRepositoryTests
 		// Arrange
 		_inMemoryDatabaseMock?.Setup(id => id.GeoBase).Returns(new GeoBaseModel
 		{
-			IpAddressIntervals = GetIpAddresses().Select(ia => new IpAddressIntervalModel
+			IpAddressIntervalsSortedByIpRanges = GetIpAddresses().Select(ia => new IpAddressIntervalModel
 			{
 				IpFrom = (uint)ia,
 				IpTo = (uint)(ia + 10),
@@ -55,7 +57,7 @@ public sealed class LocationInMemoryRepositoryTests
 		// Arrange
 		_inMemoryDatabaseMock?.Setup(id => id.GeoBase).Returns(new GeoBaseModel
 		{
-			IpAddressIntervals = GetIpAddresses().Select(ia => new IpAddressIntervalModel
+			IpAddressIntervalsSortedByIpRanges = GetIpAddresses().Select(ia => new IpAddressIntervalModel
 			{
 				IpFrom = (uint)ia,
 				IpTo = (uint)(ia + 10),
@@ -68,6 +70,86 @@ public sealed class LocationInMemoryRepositoryTests
 
 		// Assert
 		Assert.IsNull(result);
+	}
+
+	[TestCase("Vancouver", 5, TestName = "When city is presented in the list, then return collection of locations. Vancouver")]
+	[TestCase("Antwerp", 1, TestName = "When city is presented in the list, then return collection of locations. Antwerp")]
+	[TestCase("Vats-lav", 3, TestName = "When city is presented in the list, then return collection of locations. Vats-lav")]
+	public void GetLocationsByCity_WhenCityIsPresentedInTheList_ReturnsCollectionOfLocations(string city, int expectedCollectionLength)
+	{
+		// Arrange
+		var cities = new[]
+		{
+			"Antwerp",
+			"Vans",
+			"Vans",
+			"Vancouver",
+			"Vancouver",
+			"Vancouver",
+			"Vancouver",
+			"Vancouver",
+			"Vats-lav",
+			"Vats-lav",
+			"Vats-lav"
+		};
+
+		_inMemoryDatabaseMock?.Setup(imd => imd.GeoBase).Returns(new GeoBaseModel
+		{
+			IpAddressIntervalsSortedByCityName = cities.Select(c => new IpAddressIntervalModel
+			{
+				Location = new LocationModel { City = c }
+			}).ToArray()
+		});
+
+		// Act
+		var result = _locationsInMemoryRepository?.GetLocationsByCity(city).Result;
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.That(result?.Length, Is.EqualTo(expectedCollectionLength));
+
+		foreach (var location in result ?? Array.Empty<Location>())
+		{
+			Assert.IsNotNull(location);
+			Assert.AreEqual(city, location?.City);
+		}
+	}
+
+	[TestCase("Vats", TestName = "When city is not presented in the list, then return an empty collection of locations. Vats")]
+	[TestCase("Ant", TestName = "When city is not presented in the list, then return an empty collection of locations. Ant")]
+	[TestCase("Van", TestName = "When city is not presented in the list, then return an empty collection of locations. Van")]
+	public void GetLocationsByCity_WhenCityIsNotPresentedInTheList_ReturnsEmptyCollectionOfLocations(string city)
+	{
+		// Arrange
+		var cities = new[]
+		{
+			"Antwerp",
+			"Vans",
+			"Vans",
+			"Vancouver",
+			"Vancouver",
+			"Vancouver",
+			"Vancouver",
+			"Vancouver",
+			"Vats-lav",
+			"Vats-lav",
+			"Vats-lav"
+		};
+
+		_inMemoryDatabaseMock?.Setup(imd => imd.GeoBase).Returns(new GeoBaseModel
+		{
+			IpAddressIntervalsSortedByCityName = cities.Select(c => new IpAddressIntervalModel
+			{
+				Location = new LocationModel { City = c }
+			}).ToArray()
+		});
+
+		// Act
+		var result = _locationsInMemoryRepository?.GetLocationsByCity(city).Result;
+
+		// Assert
+		Assert.IsNotNull(result);
+		Assert.That(result?.Length, Is.EqualTo(0));
 	}
 
 	private int[] GetIpAddresses()

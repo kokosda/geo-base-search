@@ -1,10 +1,9 @@
-﻿using System.Net;
-using System.Text.Json.Serialization;
+﻿using GeoBaseSearch.Application.IpAddresses;
 using GeoBaseSearch.Domain.Locations;
 
-namespace GeoBaseSearch.Application.IpAddresses;
+namespace GeoBaseSearch.Application.Cities;
 
-public sealed class LocationByIpDto
+public class LocationByCityDto
 {
 	public string Country { get; init; } = string.Empty;
 	public string Region { get; init; } = string.Empty;
@@ -14,15 +13,12 @@ public sealed class LocationByIpDto
 	public float Longitude { get; init; }
 	public float Latitude { get; init; }
 
-	[JsonIgnore]
-	public HttpStatusCode HttpStatusCode { get; init; }
-
-	public static LocationByIpDto FromLocation(Location location, HttpStatusCode httpStatusCode)
+	public static LocationByCityDto FromLocation(Location? location)
 	{
 		if (location is null)
 			throw new ArgumentNullException(nameof(location));
 
-		var result = new LocationByIpDto
+		var result = new LocationByCityDto
 		{
 			Country = location.Country,
 			Region = location.Region,
@@ -30,8 +26,7 @@ public sealed class LocationByIpDto
 			City = location.City,
 			Organization = location.Organization,
 			Longitude = location.Longitude,
-			Latitude = location.Latitude,
-			HttpStatusCode = httpStatusCode
+			Latitude = location.Latitude
 		};
 		return result;
 	}
