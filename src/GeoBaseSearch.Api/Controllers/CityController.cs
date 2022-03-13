@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GeoBaseSearch.Api.Controllers;
 
-[Route("city")]
+[Route("api/v1/city")]
 [ApiController]
 public sealed class CityController : ControllerBase
 {
@@ -16,7 +16,8 @@ public sealed class CityController : ControllerBase
 	}
 
 	[HttpGet]
-	public async Task<ActionResult> Locations([FromQuery] LocationsByCityQuery query)
+	[Route("locations")]
+	public async Task<ActionResult> GetLocations([FromQuery] LocationsByCityQuery query)
 	{
 		var responseContainer = await _locationsByCityQueryHandler.HandleAsync(query);
 
