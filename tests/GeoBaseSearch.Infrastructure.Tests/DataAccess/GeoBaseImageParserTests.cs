@@ -24,6 +24,7 @@ public sealed class GeoBaseImageParserTests
 		Assert.IsNotNull(result);
 		Assert.IsNotNull(result.HeaderModel);
 		Assert.AreEqual(1, result.HeaderModel?.Version);
+		Assert.AreEqual("Geo.IP", result.HeaderModel?.Name);
 		Assert.AreEqual(1487167858, result.HeaderModel?.Timestamp);
 		Assert.AreEqual(100000, result.HeaderModel?.Records);
 		Assert.AreEqual(60, result.HeaderModel?.OffsetRanges);

@@ -37,7 +37,7 @@ public sealed class GeoBaseImageParser : IGeoBaseImageParser
 		var version = BitConverter.ToInt32(new ReadOnlySpan<byte>(geoBaseImage, shift, SIZE_OF_INT32));
 		shift += SIZE_OF_INT32;
 
-		var name = new ReadOnlySpan<byte>(geoBaseImage, shift, 32).ToArray().Select(i => (sbyte)i).ToArray();
+		var name = Encoding.UTF8.GetString(new ReadOnlySpan<byte>(geoBaseImage, shift, 32));
 		shift += 32;
 
 		var timestamp = BitConverter.ToUInt64(new ReadOnlySpan<byte>(geoBaseImage, shift, SIZE_OF_UINT64));
@@ -57,7 +57,7 @@ public sealed class GeoBaseImageParser : IGeoBaseImageParser
 		var result = new HeaderModel
 		{
 			Version = version,
-			Name = name,
+			Name = TrimRecordProperty(name),
 			Timestamp = timestamp,
 			Records = records,
 			OffsetRanges = offsetRanges,
@@ -122,12 +122,12 @@ public sealed class GeoBaseImageParser : IGeoBaseImageParser
 
 		var result = new LocationModel
 		{
-			Id = (int)locationIndex - (int)headerModel.OffsetLocations + 1,
-			Country = country,
-			Region = region,
-			Postal = postal,
-			City = city,
-			Organization = organization,
+			Id = (int)locationIndex + 1,
+			Country = TrimRecordProperty(country),
+			Region = TrimRecordProperty(region),
+			Postal = TrimRecordProperty(postal),
+			City = TrimRecordProperty(city),
+			Organization = TrimRecordProperty(organization),
 			Latitude = latitude,
 			Longitude = longitude
 		};
@@ -149,6 +149,15 @@ public sealed class GeoBaseImageParser : IGeoBaseImageParser
 			result[i] = ipAddressIntervalModels[recordsRelativeIndex];
 		}
 
+		return result;
+	}
+
+	private static string TrimRecordProperty(string recordProperty)
+	{
+		if (string.IsNullOrWhiteSpace(recordProperty))
+			return recordProperty;
+
+		var result = recordProperty.Replace("\0", string.Empty).Trim();
 		return result;
 	}
 }

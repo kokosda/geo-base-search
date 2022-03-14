@@ -10,7 +10,7 @@ public sealed class HeaderModel
 	/// <summary>
 	/// name/prefix for the database
 	/// </summary>
-	public sbyte[] Name { get; init; } = Array.Empty<sbyte>();
+	public string Name { get; init; } = string.Empty;
 
 	/// <summary>
 	/// database creation time
