@@ -1,5 +1,4 @@
-﻿using GeoBaseSearch.Domain.IpAddresses;
-using GeoBaseSearch.Domain.Locations;
+﻿using GeoBaseSearch.Domain.Locations;
 using GeoBaseSearch.Infrastructure.DataAccess.Abstract;
 using GeoBaseSearch.Infrastructure.Models;
 
