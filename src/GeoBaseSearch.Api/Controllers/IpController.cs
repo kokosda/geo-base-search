@@ -18,6 +18,7 @@ public sealed class IpController : ControllerBase
 
 	[HttpGet]
 	[Route("location")]
+	[ResponseCache(Duration = 24 * 60 * 60)]
 	public async Task<ActionResult> GetLocation([FromQuery] LocationByIpQuery query)
 	{
 		var responseContainer = await _locationByIpQueryHandler.HandleAsync(query);

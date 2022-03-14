@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddInfrastructureLevelServices();
 builder.Services.AddApplicationLevelServices();
 
+builder.Services.AddResponseCaching(configureOptions => configureOptions.UseCaseSensitivePaths = true);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -25,7 +26,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseResponseCaching();
+app.UseResponseCachingSettings();
 app.UseAuthorization();
 
 app.MapControllers();

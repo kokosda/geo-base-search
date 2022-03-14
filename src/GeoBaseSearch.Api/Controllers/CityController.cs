@@ -17,6 +17,7 @@ public sealed class CityController : ControllerBase
 
 	[HttpGet]
 	[Route("locations")]
+	[ResponseCache(Duration = 24 * 60 * 60)]
 	public async Task<ActionResult> GetLocations([FromQuery] LocationsByCityQuery query)
 	{
 		var responseContainer = await _locationsByCityQueryHandler.HandleAsync(query);
