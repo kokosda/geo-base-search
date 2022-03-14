@@ -11,7 +11,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{base_url}}/ip/location?ip=123.234.123.234",
+					"raw": "{{base_url}}/ip/location?ip=139.245.25.155",
 					"host": [
 						"{{base_url}}"
 					],
@@ -22,7 +22,46 @@
 					"query": [
 						{
 							"key": "ip",
-							"value": "123.234.123.234"
+							"value": "123.234.123.234",
+							"disabled": true
+						},
+						{
+							"key": "ip",
+							"value": "139.245.25.155"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LocationsByCity",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/city/locations?city=cit_Esyga E Eja Ybi ",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"city",
+						"locations"
+					],
+					"query": [
+						{
+							"key": "city",
+							"value": "cit_A ",
+							"disabled": true
+						},
+						{
+							"key": "city",
+							"value": "cit_Esyga E Eja Ybi "
+						},
+						{
+							"key": "city",
+							"value": "lok",
+							"disabled": true
 						}
 					]
 				}
