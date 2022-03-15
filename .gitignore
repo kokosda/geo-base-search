@@ -61,6 +61,7 @@ project.lock.json
 project.fragment.lock.json
 src/*/artifacts/
 tests/*/artifacts/
+src/*/wwwroot/*/site.js
 
 # StyleCop
 StyleCopReport.xml
