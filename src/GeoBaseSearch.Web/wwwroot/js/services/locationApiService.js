@@ -7,12 +7,12 @@
 		this.httpClient = new HttpClient();
 	}
 
-	async getLocationByIp(ip) {
+	getLocationByIp(ip) {
 		if (!ip)
 			throw new Error("IP parameter is not defined.");
 
 		const locationByIpUrl = this.composeUrl(`/ip/location/?ip=${ip}`);
-		const result = await this.httpClient.get(locationByIpUrl);
+		const result = this.httpClient.get(locationByIpUrl);
 		return result;
 	}
 

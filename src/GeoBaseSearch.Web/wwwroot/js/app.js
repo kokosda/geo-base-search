@@ -7,7 +7,7 @@ class App {
 		this.appSettingsString = appSettingsString;
 
 		window.GeoBaseSearchState = {
-			serviceRegisry: new ServiceRegistry({ BaseApiUrl: this.appSettings.BaseApiUrl })
+			serviceRegistry: new ServiceRegistry({ BaseApiUrl: this.appSettings.BaseApiUrl })
 		};
 	}
 
