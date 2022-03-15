@@ -1,7 +1,21 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model GeoBaseSearch.Web.Models.HomeViewModel
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-</div>
+<div id="app"></div>
+
+<input id="AppSettings" type="hidden" value="@Model?.AppSettingsString"/>
+
+@section Scripts
+{
+	<script type="text/javascript">
+		const appSettingsElement = document.getElementById("AppSettings");
+
+		if (!appSettingsElement)
+			throw new Error("AppSettings element is not defined");
+
+		if (!App)
+			throw new Error("App object is not defined.")
+
+		const app = new App(appSettingsElement.value);
+		app.run();
+    </script>
+}
