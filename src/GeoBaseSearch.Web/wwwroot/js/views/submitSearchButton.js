@@ -4,12 +4,14 @@
 		this.text = "Search";
 	}
 
-	makeLoading() {
+	setLoading() {
 		this.text = "Loading...";
+		document.getElementById("SubmitSearchButton").innerText = this.text;
 	}
 
-	makeDefault() {
+	setDefault() {
 		this.text = "Search";
+		document.getElementById("SubmitSearchButton").innerText = this.text;
 	}
 
 	render() {
