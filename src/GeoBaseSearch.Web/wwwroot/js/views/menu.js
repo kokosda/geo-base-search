@@ -23,7 +23,6 @@
 	}
 
 	onModeSelectorChange(e) {
-		console.log("clicked");
 		const state = this.getState();
 		state.selectorState = document.getElementById("ModeSelector").value;
 		this.setState(state);
