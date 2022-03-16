@@ -90,3 +90,10 @@ Develop a web application to get the coordinates of a user by their IP address a
 ### Investments:
 
 -   [database geobase.dat](https://github.com/kokosda/geo-base-search/blob/main/artifacts/test-dot-net-geobase.zip)
+
+### How to Build:
+
+1. MS Visual Studio 2022 / Rider
+2. GeoBaseSearch.Api: build and run an API server first
+3. GeoBaseSearch.Web: build an run web server.
+4. Access a web page in browser.
