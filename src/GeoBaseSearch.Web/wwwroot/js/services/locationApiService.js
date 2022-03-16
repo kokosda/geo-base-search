@@ -4,7 +4,7 @@
 			throw new Error("BaseUrl is not defined.");
 
 		this.baseUrl = baseUrl;
-		this.httpClient = new HttpClient();
+		this.httpClient = new HttpApiClient();
 	}
 
 	getLocationByIp(ip) {
@@ -16,12 +16,12 @@
 		return result;
 	}
 
-	async getLocationsByCity(city) {
+	getLocationsByCity(city) {
 		if (!city)
 			throw new Error("City parameter is not defined.");
 
 		const locationsByCityUrl = this.composeUrl(`/city/locations/?city=${city}`);
-		const result = await this.httpClient.get(locationsByCityUrl);
+		const result = this.httpClient.get(locationsByCityUrl);
 		return result;
 	}
 
