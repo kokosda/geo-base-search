@@ -11,19 +11,16 @@
 
 	async getLocationData(dataLoadingFunction) {
 		const searchInputValue = this.searchInput.getValue();
-		this.submitSearchButton.makeLoading();
-		const self = this;
+		this.submitSearchButton.setLoading();
 		let result = "";
 
 		try {
-			await dataLoadingFunction(searchInputValue)
-				.then(data => result = data)
-				.catch(err => result = err)
-				.finally(() => self.submitSearchButton.makeDefault());
+			result = await dataLoadingFunction(searchInputValue);
 		} catch (e) {
-			this.submitSearchButton.makeDefault();
 			console.error(e);
 			result = e.message;
+		} finally {
+			this.submitSearchButton.setDefault()
 		}
 
 		return result;
