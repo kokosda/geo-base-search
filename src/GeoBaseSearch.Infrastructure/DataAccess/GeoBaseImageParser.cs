@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Text;
-using GeoBaseSearch.Infrastructure.DataAccess.Abstract;
+﻿using GeoBaseSearch.Infrastructure.DataAccess.Abstract;
 using GeoBaseSearch.Infrastructure.Models;
 
 namespace GeoBaseSearch.Infrastructure.DataAccess;
@@ -38,7 +36,7 @@ public sealed class GeoBaseImageParser : IGeoBaseImageParser
 		var version = BitConverter.ToInt32(geoBaseImage, shift);
 		shift += SIZE_OF_INT32;
 
-		var name = Encoding.UTF8.GetString(geoBaseImage, shift, GetNullStringIndex(geoBaseImage, shift, 32));
+		var name = GetStringValue(geoBaseImage, shift, 32);
 		shift += 32;
 
 		var timestamp = BitConverter.ToUInt64(geoBaseImage, shift);
@@ -104,11 +102,11 @@ public sealed class GeoBaseImageParser : IGeoBaseImageParser
 		var result = new LocationModel
 		{
 			Id = (int)locationIndex + 1,
-			Country = Encoding.UTF8.GetString(geoBaseImage, shift, GetNullStringIndex(geoBaseImage, shift, 8)),
-			Region = Encoding.UTF8.GetString(geoBaseImage, shift + 8, GetNullStringIndex(geoBaseImage, shift + 8, 12)),
-			Postal = Encoding.UTF8.GetString(geoBaseImage, shift + 8 + 12, GetNullStringIndex(geoBaseImage, shift + 8 + 12, 12)),
-			City = Encoding.UTF8.GetString(geoBaseImage, shift + 8 + 12 + 12, GetNullStringIndex(geoBaseImage, shift + 8 + 12 + 12, 24)),
-			Organization = Encoding.UTF8.GetString(geoBaseImage, shift + 8 + 12 + 12 + 24, GetNullStringIndex(geoBaseImage, shift + 8 + 12 + 12 + 24, 32)),
+			Country = GetStringValue(geoBaseImage, shift, 8),
+			Region = GetStringValue(geoBaseImage, shift + 8, 12),
+			Postal = GetStringValue(geoBaseImage, shift + 8 + 12, 12),
+			City = GetStringValue(geoBaseImage, shift + 8 + 12 + 12, 24),
+			Organization = GetStringValue(geoBaseImage, shift + 8 + 12 + 12 + 24, 32),
 			Latitude = BitConverter.ToSingle(geoBaseImage, shift + 8 + 12 + 12 + 24 + 32),
 			Longitude = BitConverter.ToSingle(geoBaseImage, shift + 8 + 12 + 12 + 24 + 32 + SIZE_OF_FLOAT)
 		};
@@ -133,15 +131,22 @@ public sealed class GeoBaseImageParser : IGeoBaseImageParser
 		return result;
 	}
 
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static int GetNullStringIndex(byte[] geoBaseImage, int shift, int length)
+	private static string GetStringValue(byte[] geoBaseImage, int shift, int length)
 	{
+		Span<char> chars = stackalloc char[length];
+
 		for (var i = shift; i < shift + length; i++)
 		{
 			if (geoBaseImage[i] == 0)
-				return i - shift;
+			{
+				chars = chars.Slice(0, i - shift + 1);
+				break;
+			}
+
+			chars[i - shift] = (char)geoBaseImage[i];
 		}
 
-		return length - 1;
+		var result = new string(chars);
+		return result;
 	}
 }
